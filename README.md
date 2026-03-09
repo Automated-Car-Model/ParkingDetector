@@ -6,9 +6,9 @@
 
 <br>
 
-[cite_start]This repository contains the code and resources for an Edge AI system designed to detect available parking spaces in real-time using a vehicle-mounted camera[cite: 888]. 
+This repository contains the code and resources for an Edge AI system designed to detect available parking spaces in real-time using a vehicle-mounted camera[cite: 888]. 
 
-[cite_start]The project aims to tackle the "cruising for parking" phenomenon, providing a scalable, low-cost solution to reduce urban traffic congestion, polluting emissions, and driver stress[cite: 887, 889, 910, 913]. [cite_start]This work was developed as a Bachelor's Degree Thesis in Electronic and Information Technology Engineering at the University of Genoa[cite: 873, 875, 876].
+The project aims to tackle the "cruising for parking" phenomenon, providing a scalable, low-cost solution to reduce urban traffic congestion, polluting emissions, and driver stress[cite: 887, 889, 910, 913]. [cite_start]This work was developed as a Bachelor's Degree Thesis in Electronic and Information Technology Engineering at the University of Genoa[cite: 873, 875, 876].
 
 ---
 
@@ -54,4 +54,5 @@ The project is divided into three main components:
 Clone the repository to your local machine:
 ```bash
 git clone [https://github.com/Automated-Car-Model/ParkingDetector.git](https://github.com/Automated-Car-Model/ParkingDetector.git)
+
 cd ParkingDetector
