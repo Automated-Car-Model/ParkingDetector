@@ -16,9 +16,9 @@ The project aims to tackle the "cruising for parking" phenomenon, providing a sc
 
 The project is divided into three main components:
 
-1. **`Android_App/`**: Source code for an Android application that acts as a local HTTP server, streaming the smartphone's camera feed (MJPEG) and GPS data (JSON).
-2. **`ArduCAM_Firmware/`**: C/C++ Firmware for the ArduCAM Pico4ML Dev Kit. It captures grayscale frames and outputs them over USB Serial using a dual-core Raspberry Pi RP2040 setup.
-3. **`Processing_Scripts/`**: Python scripts for the Host Computer. Includes camera calibration tools, perspective transformation, and the main YOLO11 inference scripts.
+1. **`Android_app/`**: Source code for an Android application that acts as a local HTTP server, streaming the smartphone's camera feed (MJPEG) and GPS data (JSON).
+2. **`ArduCAM_firmware/`**: C/C++ Firmware for the ArduCAM Pico4ML Dev Kit. It captures grayscale frames and outputs them over USB Serial using a dual-core Raspberry Pi RP2040 setup.
+3. **`processing_scripts/`**: Python scripts for the Host Computer. Includes camera calibration tools, perspective transformation, and the main YOLO11 inference scripts.
    * *`weights/`*: Contains the pre-trained YOLO11s model (`.pt`).
    * *`calib_images/`*: Chessboard images for intrinsic camera calibration.
    * *`dataset_sample/`*: A small sample of the custom dataset used for training. *(Note: The full dataset of 6000+ images is available externally on Roboflow: [Parking Slots Segmentation Dataset](https://app.roboflow.com/riccardo-xeg03/parking-slots-segmentation-gjrcw/15))*.
@@ -56,5 +56,6 @@ Clone the repository to your local machine:
 git clone [https://github.com/Automated-Car-Model/ParkingDetector.git](https://github.com/Automated-Car-Model/ParkingDetector.git)
 
 cd ParkingDetector
+
 
 
