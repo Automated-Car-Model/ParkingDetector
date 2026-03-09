@@ -1,0 +1,35 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# =========================
+# C/C++ e CMake (ArduCAM)
+# =========================
+ArduCAM_Firmware/build/
+*.o
+*.obj
+*.elf
+*.uf2
+*.bin
+
+# =========================
+# Android Studio / Gradle
+# =========================
+Android_App/build/
+Android_App/app/build/
+.gradle/
+local.properties
+.idea/
+*.iml
+
+# =========================
+# OS Files (Windows/Mac)
+# =========================
+.DS_Store
+Thumbs.db
