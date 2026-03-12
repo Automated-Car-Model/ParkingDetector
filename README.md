@@ -14,8 +14,6 @@ The project aims to tackle the "cruising for parking" phenomenon, providing a sc
 
 ## Repository Structure
 
-The project is divided into three main components:
-
     ParkingDetector/
     ├── .gitignore                              
     ├── README.md                               
@@ -136,6 +134,7 @@ Before running the inference, update the calibration matrices in the main script
 * **Co-Supervisor:** Dott. Alessandro Pighetti
 * **Institution:** Università di Genova (University of Genoa)
 * **Academic Year:** 2024-2025
+
 
 
 
