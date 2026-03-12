@@ -59,7 +59,7 @@ The system operates on a distributed architecture divided into two main modules:
 
 ## Data Processing Pipeline
 
-1. **Pre-processing:** Frames are converted to BGR, corrected for optical lens distortion using intrinsic calibration parameters, and resized to match YOLO's input (640x640).
+1. **Pre-processing (ArduCAM):** Frames are converted to BGR, corrected for optical lens distortion using intrinsic calibration parameters, and resized to match YOLO's input (640x640).
 2. **Inference:** YOLO11s detects free parking slots and outputs segmentation masks.
 3. **Centroid Calculation:** The geometric centroid of each parking space is calculated in pixel coordinates.
 4. **Spatial Conversion:** 2D pixel coordinates are converted into 3D real-world geographic coordinates via perspective transformation (Homography matrix).
@@ -128,6 +128,7 @@ Before running the inference, update the calibration matrices in the main script
 * **Co-Supervisor:** Dott. Alessandro Pighetti
 * **Institution:** Università di Genova (University of Genoa)
 * **Academic Year:** 2024-2025
+
 
 
 
