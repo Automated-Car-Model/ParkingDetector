@@ -43,12 +43,6 @@ The project aims to tackle the "cruising for parking" phenomenon, providing a sc
 
 ## System Architecture
 
-<div align="center">
-  <img src="media/architecture.png" alt="System Block Diagram" width="800"/>
-</div>
-
-<br>
-
 The system operates on a distributed architecture divided into two main modules:
 
 * **Acquisition Unit:** Captures the front-facing video stream. It can be implemented using either a custom Android application on a smartphone (acting as a local HTTP server) or an ArduCAM Pico4ML Dev Kit (transmitting raw frames via USB serial).
@@ -134,6 +128,7 @@ Before running the inference, update the calibration matrices in the main script
 * **Co-Supervisor:** Dott. Alessandro Pighetti
 * **Institution:** Università di Genova (University of Genoa)
 * **Academic Year:** 2024-2025
+
 
 
 
