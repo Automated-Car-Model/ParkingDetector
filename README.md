@@ -16,18 +16,46 @@ The project aims to tackle the "cruising for parking" phenomenon, providing a sc
 
 The project is divided into three main components:
 
-1. **`Android_app/`**: Source code for an Android application that acts as a local HTTP server, streaming the smartphone's camera feed (MJPEG) and GPS data (JSON).
-2. **`ArduCAM_firmware/`**: C/C++ Firmware for the ArduCAM Pico4ML Dev Kit. It captures grayscale frames and outputs them over USB Serial using a dual-core Raspberry Pi RP2040 setup.
-3. **`processing_scripts/`**: Python scripts for the Host Computer. Includes camera calibration tools, perspective transformation, and the main YOLO11 inference scripts.
-   * *`weights/`*: Contains the pre-trained YOLO11s model (`.pt`).
-   * *`calib_images/`*: Chessboard images for intrinsic camera calibration.
-   * *`dataset_sample/`*: A small sample of the custom dataset used for training. *(Note: The full dataset of 6000+ images is available externally on Roboflow: [Parking Slots Segmentation Dataset](https://app.roboflow.com/riccardo-xeg03/parking-slots-segmentation-gjrcw/15))*.
+    ParkingDetector/
+    ├── .gitignore                              # Git ignore file
+    ├── README.md                               # Project documentation
+    ├── Android_app/                            # Android App (Acquisition Unit)
+    │   └── ... (Source code, Gradle files, etc.)
+    ├── ArduCAM_firmware/                       # C/C++ Firmware (Acquisition Unit)
+    │   ├── lib/
+    │   ├── main.c
+    │   ├── image.pio
+    │   └── CMakeLists.txt
+    ├── processing_scripts/                     # Python Scripts (Processing Unit)
+    │   ├── calib_images/                       # Images for intrinsic calibration
+    │   │   ├── arducam/                        # Chessboard images taken with ArduCAM
+    │   │   └── smartphone/                     # Chessboard images taken with Smartphone
+    │   ├── dataset_sample/                     # Sample of the custom training dataset
+    │   ├── weights/                            # YOLO11s pre-trained model weights
+    │   ├── calibrazione_matrice_omografica.py
+    │   ├── calibrazione_matrice_videocamera.py
+    │   ├── prova_con_app2.py
+    │   ├── prova_con_ArduCAM2.py
+    │   └── requirements.txt
+    └── media/                                  # Assets for documentation
+        ├── example.gif
+        └── architecture.png
+
+*(Note: The full dataset of 6000+ images is available externally on Roboflow: [Parking Slots Segmentation Dataset](https://app.roboflow.com/riccardo-xeg03/parking-slots-segmentation-gjrcw/15))*.
 
 ---
 
 ## System Architecture
 
-* **Acquisition Unit:** Captures the front-facing video stream (Smartphone or ArduCAM).
+<div align="center">
+  <img src="media/architecture.png" alt="System Block Diagram" width="800"/>
+</div>
+
+<br>
+
+The system operates on a distributed architecture divided into two main modules:
+
+* **Acquisition Unit:** Captures the front-facing video stream. It can be implemented using either a custom Android application on a smartphone (acting as a local HTTP server) or an ArduCAM Pico4ML Dev Kit (transmitting raw frames via USB serial).
 * **Processing Unit:** A dedicated host computer that receives the frames, runs the machine learning inference via a Python script, and processes spatial coordinates to calculate the distance and GPS position of the closest available parking slot.
 
 ---
@@ -52,10 +80,65 @@ The project is divided into three main components:
 ## Installation and Setup
 
 Clone the repository to your local machine:
-```bash
-git clone [https://github.com/Automated-Car-Model/ParkingDetector.git](https://github.com/Automated-Car-Model/ParkingDetector.git)
 
-cd ParkingDetector
+    git clone https://github.com/Automated-Car-Model/ParkingDetector.git
+    cd ParkingDetector
+
+### 1. Host Computer (Python Processing)
+Ensure you have **Python 3.8+** installed. Use a virtual environment:
+
+    cd processing_scripts
+    python -m venv venv
+    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    pip install -r requirements.txt
+
+### 2. Android Smartphone (Acquisition Option A)
+1. Open the Android_app folder in **Android Studio**.
+2. Connect your Android device (USB Debugging enabled).
+3. Build and run the app (Requires API Level 31+).
+
+### 3. ArduCAM Pico4ML Dev Kit (Acquisition Option B)
+1. Install the **Raspberry Pi Pico SDK**.
+2. Build the firmware:
+
+    cd ArduCAM_firmware
+    mkdir build && cd build
+    cmake ..
+    make
+
+3. Connect the ArduCAM while holding the **BOOTSEL** button and drag the .uf2 file into the RPI-RP2 drive.
+
+---
+
+## Usage Instructions
+
+### Step 1: Calibration
+Before running the inference, update the calibration matrices in the main scripts:
+1. **Intrinsic Calibration:** Run `calibrazione_matrice_videocamera.py` (point it to either the `smartphone` or `arducam` image folder) to calculate `CAMERA_MATRIX` and `DIST_COEFFS`.
+2. **Homography Calibration:** Run `calibrazione_matrice_omografica.py` and click on 4 known ground points to map pixels to meters.
+
+### Step 2: Running Inference
+
+**If using the Android App:**
+1. Connect both devices to the same Wi-Fi. Start the Server and Stream on the app.
+2. Ensure `BASE_URL` in `prova_con_app2.py` matches the app's IP.
+3. Run: `python prova_con_app2.py`
+
+**If using the ArduCAM:**
+1. Connect the ArduCAM via USB.
+2. Update the `PORT` variable in `prova_con_ArduCAM2.py` (e.g., COM4 or /dev/ttyACM0).
+3. Run: `python prova_con_ArduCAM2.py`
+
+---
+
+## Credits
+
+* **Author:** Riccardo Divoto
+* **Institution:** Università di Genova (University of Genoa)
+* **Academic Year:** 2024-2025
+* **Supervisors:** Prof. Riccardo Berta, Prof. Luca Lazzaroni
+* **Co-Supervisor:** Dott. Alessandro Pighetti
+
 
 
 
