@@ -17,29 +17,27 @@ The project aims to tackle the "cruising for parking" phenomenon, providing a sc
 The project is divided into three main components:
 
     ParkingDetector/
-    ├── .gitignore                              # Git ignore file
-    ├── README.md                               # Project documentation
-    ├── Android_app/                            # Android App (Acquisition Unit)
+    ├── .gitignore                              
+    ├── README.md                               
+    ├── Android_app/                            (Acquisition Unit with smartphone)
     │   └── ... (Source code, Gradle files, etc.)
-    ├── ArduCAM_firmware/                       # C/C++ Firmware (Acquisition Unit)
+    ├── ArduCAM_firmware/                       (Acquisition Unit with ArduCAM)
     │   ├── lib/
     │   ├── main.c
     │   ├── image.pio
     │   └── CMakeLists.txt
-    ├── processing_scripts/                     # Python Scripts (Processing Unit)
-    │   ├── calib_images/                       # Images for intrinsic calibration
-    │   │   ├── arducam/                        # Chessboard images taken with ArduCAM
-    │   │   └── smartphone/                     # Chessboard images taken with Smartphone
-    │   ├── dataset_sample/                     # Sample of the custom training dataset
-    │   ├── weights/                            # YOLO11s pre-trained model weights
-    │   ├── calibrazione_matrice_omografica.py
-    │   ├── calibrazione_matrice_videocamera.py
-    │   ├── prova_con_app2.py
-    │   ├── prova_con_ArduCAM2.py
+    ├── processing_scripts/                     (Python Scripts (Processing Unit))
+    │   ├── calib_images/                       (Images for intrinsic calibration)
+    │   │   ├── arducam/                        (Chessboard images taken with ArduCAM)
+    │   │   └── smartphone/                     (Chessboard images taken with Smartphone)
+    │   ├── weights/                            (YOLO11s pre-trained model weights)
+    │   ├── homography_matrix_calibration.py
+    │   ├── camera_matrix_calibration.py.py
+    │   ├── detection_with_smartphone.py
+    │   ├── detection_with_arducam.py
     │   └── requirements.txt
-    └── media/                                  # Assets for documentation
-        ├── example.gif
-        └── architecture.png
+    └── media/                                  (Assets for documentation)
+        └── example.gif
 
 *(Note: The full dataset of 6000+ images is available externally on Roboflow: [Parking Slots Segmentation Dataset](https://app.roboflow.com/riccardo-xeg03/parking-slots-segmentation-gjrcw/15))*.
 
@@ -89,7 +87,7 @@ Ensure you have **Python 3.8+** installed. Use a virtual environment:
 
     cd processing_scripts
     python -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
+    source venv\Scripts\activate
     pip install -r requirements.txt
 
 ### 2. Android Smartphone (Acquisition Option A)
@@ -114,30 +112,31 @@ Ensure you have **Python 3.8+** installed. Use a virtual environment:
 
 ### Step 1: Calibration
 Before running the inference, update the calibration matrices in the main scripts:
-1. **Intrinsic Calibration:** Run `calibrazione_matrice_videocamera.py` (point it to either the `smartphone` or `arducam` image folder) to calculate `CAMERA_MATRIX` and `DIST_COEFFS`.
-2. **Homography Calibration:** Run `calibrazione_matrice_omografica.py` and click on 4 known ground points to map pixels to meters.
+1. **Intrinsic Calibration:** Run `camera_matrix_calibration.py` (point it to either the `smartphone` or `arducam` image folder) to calculate `CAMERA_MATRIX` and `DIST_COEFFS`.
+2. **Homography Calibration:** Run `homography_matrix_calibration.py` and click on 4 known ground points to map pixels to meters.
 
 ### Step 2: Running Inference
 
 **If using the Android App:**
-1. Connect both devices to the same Wi-Fi. Start the Server and Stream on the app.
-2. Ensure `BASE_URL` in `prova_con_app2.py` matches the app's IP.
-3. Run: `python prova_con_app2.py`
+1. Connect both devices to the same Wi-Fi. Then start the Server and Stream on the app.
+2. Ensure `BASE_URL` in `detection_with_smartphone.py` matches the app's IP.
+3. Run: `detection_with_smartphone.py`
 
 **If using the ArduCAM:**
 1. Connect the ArduCAM via USB.
-2. Update the `PORT` variable in `prova_con_ArduCAM2.py` (e.g., COM4 or /dev/ttyACM0).
-3. Run: `python prova_con_ArduCAM2.py`
+2. Update the `PORT` variable in `detection_with_arducam.py` (e.g., COM4 or /dev/ttyACM0).
+3. Run: `python detection_with_arducam.py`
 
 ---
 
 ## Credits
 
 * **Author:** Riccardo Divoto
-* **Institution:** Università di Genova (University of Genoa)
-* **Academic Year:** 2024-2025
 * **Supervisors:** Prof. Riccardo Berta, Prof. Luca Lazzaroni
 * **Co-Supervisor:** Dott. Alessandro Pighetti
+* **Institution:** Università di Genova (University of Genoa)
+* **Academic Year:** 2024-2025
+
 
 
 
