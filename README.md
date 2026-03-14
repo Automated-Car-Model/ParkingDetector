@@ -8,7 +8,9 @@
 
 This repository contains the code and resources for an Edge AI system designed to detect available parking spaces in real-time using a vehicle-mounted camera. 
 
-The project aims to tackle the "cruising for parking" phenomenon, providing a scalable, low-cost solution to reduce urban traffic congestion, polluting emissions, and driver stress. This work was developed as a Bachelor's Degree Thesis in Electronic and Information Technology Engineering at the University of Genoa.
+The project aims to tackle the "cruising for parking" phenomenon, providing a scalable, low-cost solution to reduce urban traffic congestion, polluting emissions, and driver stress. 
+
+This work was developed as a Bachelor's Degree Thesis in Electronic and Information Technology Engineering at the University of Genoa.
 
 ---
 
