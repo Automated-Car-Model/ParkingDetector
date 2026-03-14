@@ -37,7 +37,7 @@ The project aims to tackle the "cruising for parking" phenomenon, providing a sc
     └── media/                                  (Assets for documentation)
         └── example.gif
 
-*(Note: The full dataset of 6000+ images is available externally on Roboflow: [Parking Slots Segmentation Dataset](https://app.roboflow.com/riccardo-xeg03/parking-slots-segmentation-gjrcw/15))*.
+*(Note: the full dataset of 6000+ images is available externally on Roboflow: [Parking Slots Segmentation Dataset](https://app.roboflow.com/riccardo-xeg03/parking-slots-segmentation-gjrcw/15))*.
 
 ---
 
@@ -45,25 +45,25 @@ The project aims to tackle the "cruising for parking" phenomenon, providing a sc
 
 The system operates on a distributed architecture divided into two main modules:
 
-* **Acquisition Unit:** Captures the front-facing video stream. It can be implemented using either a custom Android application on a smartphone (acting as a local HTTP server) or an ArduCAM Pico4ML Dev Kit (transmitting raw frames via USB serial).
-* **Processing Unit:** A dedicated host computer that receives the frames, runs the machine learning inference via a Python script, and processes spatial coordinates to calculate the distance and GPS position of the closest available parking slot.
+* **Acquisition Unit:** captures the front-facing video stream. It can be implemented using either a custom Android application on a smartphone (acting as a local HTTP server) or an ArduCAM Pico4ML Dev Kit (transmitting raw frames via USB serial).
+* **Processing Unit:** a dedicated host computer that receives the frames, runs the machine learning inference, and processes spatial coordinates to calculate the distance and GPS position of the closest available parking slot.
 
 ---
 
 ## Model and Dataset
 
-* **Machine Learning Model:** The system uses **YOLO11s** (Small) for instance segmentation, selected for its optimal balance between high detection accuracy and low computational latency.
-* **Custom Dataset:** Over 6,000 images were collected and annotated using Roboflow. The dataset ensures model robustness by including indoor/outdoor environments, various times of day (including night), and multiple camera angles.
+* **Machine Learning Model:** the system uses **YOLO11s** (Small) for instance segmentation, selected for its optimal balance between high detection accuracy and low computational latency.
+* **Custom Dataset:** over 6,000 images were collected and annotated using Roboflow. The dataset ensures model robustness by including indoor/outdoor environments, various times of day (including night), and multiple camera angles.
 
 ---
 
 ## Data Processing Pipeline
 
-1. **Pre-processing (ArduCAM):** Frames are converted to BGR, corrected for optical lens distortion using intrinsic calibration parameters, and resized to match YOLO's input (640x640).
+1. **Pre-processing (ArduCAM):** frames are converted to BGR, corrected for optical lens distortion using intrinsic calibration parameters, and resized to match YOLO's input (640x640).
 2. **Inference:** YOLO11s detects free parking slots and outputs segmentation masks.
-3. **Centroid Calculation:** The geometric centroid of each parking space is calculated in pixel coordinates.
+3. **Centroid Calculation:** the geometric centroid of each parking space is calculated in pixel coordinates.
 4. **Spatial Conversion:** 2D pixel coordinates are converted into 3D real-world geographic coordinates via perspective transformation (Homography matrix).
-5. **Target Selection:** The system calculates the distance to all detected slots and highlights the closest one ("Target"), displaying its distance and GPS coordinates.
+5. **Target Selection:** the system calculates the distance to all detected slots and highlights the closest one ("Target"), displaying its distance and GPS coordinates.
 
 ---
 
@@ -104,19 +104,19 @@ Ensure you have **Python 3.8+** installed. Use a virtual environment:
 
 ### Step 1: Calibration
 Before running the inference, update the calibration matrices in the main scripts:
-1. **Intrinsic Calibration:** Run `camera_matrix_calibration.py` (point it to either the `smartphone` or `arducam` image folder) to calculate `CAMERA_MATRIX` and `DIST_COEFFS`.
-2. **Homography Calibration:** Run `homography_matrix_calibration.py` and click on 4 known ground points to map pixels to meters.
+1. **Intrinsic Calibration:** run `camera_matrix_calibration.py` (point it to either the `smartphone` or `arducam` image folder) to calculate `CAMERA_MATRIX` and `DIST_COEFFS`.
+2. **Homography Calibration:** run `homography_matrix_calibration.py` and click on 4 known ground points to map pixels to meters.
 
 ### Step 2: Running Inference
 
 **If using the Android App:**
-1. Connect both devices to the same Wi-Fi. Then start the Server and Stream on the app.
+1. Connect both devices to the same Wi-Fi and then start the Server and Stream on the app.
 2. Ensure `BASE_URL` in `detection_with_smartphone.py` matches the app's IP.
 3. Run: `detection_with_smartphone.py`
 
 **If using the ArduCAM:**
 1. Connect the ArduCAM via USB.
-2. Update the `PORT` variable in `detection_with_arducam.py` (e.g., COM4 or /dev/ttyACM0).
+2. Update the `PORT` variable in `detection_with_arducam.py` (e.g. COM4).
 3. Run: `python detection_with_arducam.py`
 
 ---
