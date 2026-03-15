@@ -1,0 +1,15 @@
+# Computer Vision 
+opencv-python>=4.8.0
+numpy>=1.23.0
+
+# Machine Learning Model (YOLO11)
+ultralytics>=8.0.0
+
+# HTTP 
+requests>=2.31.0
+
+# Serial/USB
+pyserial>=3.5
+
+# Georeferencing
+geocoder>=1.38.1
